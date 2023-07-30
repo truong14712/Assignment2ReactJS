@@ -5,6 +5,8 @@ import { ICategory } from '~/interface/category';
 import { getAllCategory } from '~/redux/createAsyncThunk/category';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { categorySelector } from '~/redux/selector';
+import { deleteCategory } from '~/redux/createAsyncThunk/category';
+import { toast } from 'react-toastify';
 
 const ManagerCategory = () => {
 	const dispatch = useAppDispatch();
@@ -12,6 +14,13 @@ const ManagerCategory = () => {
 	useEffect(() => {
 		dispatch(getAllCategory());
 	}, [dispatch]);
+	const removeCategory = (id: string | number) => {
+		dispatch(deleteCategory(id)).then((res: any) => {
+			if (res.payload?.data) {
+				toast.success(res.payload.messenger);
+			}
+		});
+	};
 	return (
 		<div className="container w-2/3 mx-auto">
 			<h2 className="my-3 text-2xl font-medium text-center ">ManagerCategory</h2>
@@ -39,12 +48,18 @@ const ManagerCategory = () => {
 											{category.name}
 										</th>
 										<td className="px-6 py-4">
-											<Link to={'update/1'} className="mx-2 font-medium text-blue-600 hover:underline">
+											<Link
+												to={`update/${category._id}`}
+												className="mx-2 font-medium text-blue-600 hover:underline"
+											>
 												Edit
 											</Link>
-											<Link to="#" className="mx-2 font-medium text-blue-600 hover:underline">
+											<button
+												className="mx-2 font-medium text-blue-600 hover:underline"
+												onClick={() => removeCategory(category._id)}
+											>
 												Xoa
-											</Link>
+											</button>
 										</td>
 									</tr>
 								);

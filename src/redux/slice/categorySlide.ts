@@ -14,9 +14,6 @@ export const categorySlice = createSlice({
 	initialState,
 	reducers: {},
 	extraReducers: (builder) => {
-		// builder.addCase(getAllCategory.pending, (state) => {
-		// 	state.isLoading = true;
-		// });
 		builder.addCase(getAllCategory.fulfilled, (state, action) => {
 			state.categories = action.payload;
 		});
@@ -26,14 +23,15 @@ export const categorySlice = createSlice({
 		// Updating
 		builder.addCase(updateCategory.fulfilled, (state, action) => {
 			const newCategory = action.payload;
+			console.log(newCategory);
 			state.categories = state.categories.map((item: ICategory) =>
 				item._id == newCategory._id ? newCategory : item,
 			);
 		});
 		// Deleting
 		builder
-			.addCase(deleteCategory.fulfilled, (state, action) => {
-				state.categories = state.categories.filter((item: any) => item.id !== action.payload);
+			.addCase(deleteCategory.fulfilled, (state, action: any) => {
+				state.categories = state.categories.filter((item: ICategory) => item._id !== action.payload?.data._id);
 			})
 			.addMatcher(
 				(action) => action.type.endsWith('/pending'),

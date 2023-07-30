@@ -8,18 +8,20 @@ interface MyExtra {
 		addCategories: (body: ICategory) => Promise<ICategory>;
 		updateCategories: (body: ICategory) => Promise<ICategory>;
 		removeCategories: (id: string) => Promise<void>;
+		getOneCategories: (id: string) => Promise<void>;
 	};
 }
-export const getAllCategory = createAsyncThunk<ICategory[], any, { extra: MyExtra }>(
-	'category/getAllCategory',
-	async (_, thunkApi) => {
-		const { extra } = thunkApi;
-		const { data }: any = await extra.category.getAllCategories();
-		return data ;
-	},
-);
-
-export const addCategory = createAsyncThunk<ICategory, ICategory, { extra: MyExtra }>(
+export const getAllCategory = createAsyncThunk<any, any, any>('category/getAllCategory', async (_, thunkApi) => {
+	const { extra } = thunkApi;
+	const { data }: any = await extra.category.getAllCategories();
+	return data;
+});
+export const getOneCategory = createAsyncThunk<any, any, any>('category/getAllCategory', async (id, thunkApi) => {
+	const { extra } = thunkApi;
+	const data = await extra.category.getOneCategories(id);
+	return data;
+});
+export const addCategory = createAsyncThunk<any, any, any>(
 	'category/addCategory',
 	async (category: ICategory, thunkApi) => {
 		const { extra } = thunkApi;
@@ -28,7 +30,7 @@ export const addCategory = createAsyncThunk<ICategory, ICategory, { extra: MyExt
 	},
 );
 
-export const updateCategory = createAsyncThunk<ICategory, ICategory, { extra: MyExtra }>(
+export const updateCategory = createAsyncThunk<any, any, any>(
 	'category/updateCategory',
 	async (category: ICategory, thunkApi) => {
 		const { extra } = thunkApi;
@@ -37,11 +39,8 @@ export const updateCategory = createAsyncThunk<ICategory, ICategory, { extra: My
 	},
 );
 
-export const deleteCategory = createAsyncThunk<void, string, { extra: MyExtra }>(
-	'category/deleteCategory',
-	async (id, thunkApi) => {
-		const { extra } = thunkApi;
-		const data = await extra.category.removeCategories(id);
-		return data;
-	},
-);
+export const deleteCategory = createAsyncThunk<any>('category/deleteCategory', async (id, thunkApi) => {
+	const { extra } = thunkApi;
+	const data = await extra.category.removeCategories(id);
+	return data;
+});
