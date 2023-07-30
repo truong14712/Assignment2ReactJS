@@ -2,12 +2,17 @@ import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/t
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 
+import { category } from '~/api';
+import categoryReducer from './slice/categorySlide';
+
 const persistConfig = {
 	key: 'root',
 	storage,
-	blacklist: ['products'],
+	blacklist: ['products', 'categories'],
 };
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+	category: categoryReducer,
+});
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 export const store = configureStore({
@@ -16,6 +21,9 @@ export const store = configureStore({
 		getDefaultMiddleware({
 			serializableCheck: {
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+			},
+			thunk: {
+				extraArgument: { category },
 			},
 		}),
 });
