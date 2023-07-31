@@ -1,30 +1,31 @@
 import { Route, Routes } from 'react-router-dom';
 import ClientLayout from './layouts/defaultLayout/client';
 import Home from './pages/client/Home';
-import Detail from './pages/client/Detail';
 import Errors from './components/Error';
 import AdminLayout from './layouts/defaultLayout/admin';
-import ManagerCategory from './pages/admin/ManagerCategory';
-import CreateCategory from './pages/admin/CreateCategory';
-import Dashboard from './pages/admin/Dashboard';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import UpdateCategory from './pages/admin/UpdateCategory';
+import { Admin, Client, Private } from './routes';
 function App() {
 	return (
 		<>
 			<Routes>
 				<Route path="/" element={<ClientLayout />}>
 					<Route index path="/" element={<Home />} />
-					<Route path="products/detail" element={<Detail />} />
+					{Client.clientRoutes.map((route, index) => {
+						const Page = route.element;
+						return <Route key={index} path={route.path} element={<Page />} />;
+					})}
+					{Private.privateRoutes.map((route, index) => {
+						const Page = route.element;
+						return <Route key={index} path={route.path} element={<Page />} />;
+					})}
 				</Route>
-				<Route path="/admin" element={<AdminLayout />}>
-					<Route path="dashboard" element={<Dashboard />} />
-					<Route path="categories">
-						<Route path="" element={<ManagerCategory />} />
-						<Route path="create" element={<CreateCategory />} />
-						<Route path="update/:id" element={<UpdateCategory />} />
-					</Route>
+				<Route element={<AdminLayout />}>
+					{Admin.adminRoutes.map((route, index) => {
+						const Page = route.element;
+						return <Route key={index} path={route.path} element={<Page />} />;
+					})}
 				</Route>
 				<Route path="*" element={<Errors />} />
 			</Routes>

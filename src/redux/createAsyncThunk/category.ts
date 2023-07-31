@@ -2,15 +2,6 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { ICategory } from '~/interface/category';
 
-interface MyExtra {
-	category: {
-		getAllCategories: () => Promise<ICategory[]>;
-		addCategories: (body: ICategory) => Promise<ICategory>;
-		updateCategories: (body: ICategory) => Promise<ICategory>;
-		removeCategories: (id: string) => Promise<void>;
-		getOneCategories: (id: string) => Promise<void>;
-	};
-}
 export const getAllCategory = createAsyncThunk<any, any, any>('category/getAllCategory', async (_, thunkApi) => {
 	const { extra } = thunkApi;
 	const { data }: any = await extra.category.getAllCategories();

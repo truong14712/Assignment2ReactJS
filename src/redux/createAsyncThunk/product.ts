@@ -8,8 +8,8 @@ export const getAllProduct = createAsyncThunk('product/getPostList', async (_, t
 	return res.data;
 });
 
-// export const addProduct = createAsyncThunk('product/addProduct', async (body, thunkApi) => {});
+export const addProduct = createAsyncThunk('product/addProduct', async (body, thunkApi) => {});
 
-// export const updateProduct = createAsyncThunk('product/updateProduct', async ({ productId, body }, thunkApi) => {});
+export const updateProduct = createAsyncThunk('product/updateProduct', async ({ productId, body }, thunkApi) => {});
 
-// export const deleteProduct = createAsyncThunk('product/deleteProduct', async (productId) => {});
+export const deleteProduct = createAsyncThunk('product/deleteProduct', async (productId) => {});

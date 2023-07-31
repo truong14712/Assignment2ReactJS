@@ -6,3 +6,6 @@ export const productSelector = (state: RootState) => {
 export const categorySelector = (state: RootState) => {
 	return state.category;
 };
+export const authSelector = (state: RootState) => {
+	return state.auth;
+};
