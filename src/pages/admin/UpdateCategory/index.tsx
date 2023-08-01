@@ -30,7 +30,7 @@ const UpdateCategory = () => {
 	const onSubmit = (data: any) => {
 		dispatch(updateCategory(data)).then((res) => {
 			if (res.payload.messenger) {
-				toast.success('Cập nhật thành công');
+				toast.success(res.payload.messenger);
 				navigate('/admin/categories');
 			}
 		});
@@ -41,7 +41,7 @@ const UpdateCategory = () => {
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<InputField name="name" label="Category Name" register={register} errors={errors.name} />
 				<button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 ">
-					Cập nhật sản phẩm
+					Cập nhật danh mục
 				</button>
 			</form>
 		</div>

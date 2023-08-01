@@ -3,7 +3,7 @@ import instance from './instance';
 const getAllCategories = () => {
 	return instance.get('/categories');
 };
-const getOneCategories = (id: string | number) => {
+const getOneCategories = (id: string) => {
 	return instance.get('/categories/' + id);
 };
 const addCategories = (data: ICategory) => {
@@ -13,7 +13,7 @@ const updateCategories = (data: ICategory) => {
 	const { _id, __v, ...updateData } = data;
 	return instance.put('/categories/' + _id, updateData);
 };
-const removeCategories = (id: string | number) => {
+const removeCategories = (id: string) => {
 	return instance.delete('/categories/' + id);
 };
 

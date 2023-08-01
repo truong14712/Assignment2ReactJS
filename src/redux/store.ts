@@ -1,18 +1,20 @@
 import { configureStore, ThunkAction, Action, combineReducers } from '@reduxjs/toolkit';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { category, auth } from '~/api';
+import { category, auth, product } from '~/api';
 import categoryReducer from './slice/categorySlide';
 import authReducer from './slice/authSlide';
+import productReducer from './slice/productSlide';
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['products', 'category', 'auth'],
+	whitelist: ['product', 'category', 'auth'],
 };
 const rootReducer = combineReducers({
 	category: categoryReducer,
 	auth: authReducer,
+	product: productReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
@@ -23,7 +25,7 @@ export const store = configureStore({
 				ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
 			},
 			thunk: {
-				extraArgument: { category, auth },
+				extraArgument: { category, auth, product },
 			},
 		}),
 });
