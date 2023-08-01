@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Loading from '~/components/Loading';
 import { ICategory } from '~/interface/category';
@@ -7,20 +7,34 @@ import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { categorySelector } from '~/redux/selector';
 import { deleteCategory } from '~/redux/createAsyncThunk/category';
 import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
 
 const ManagerCategory = () => {
 	const dispatch = useAppDispatch();
 	const { categories, isLoading } = useAppSelector(categorySelector);
+	const [currentPage, setCurrentPage] = useState(1);
+
 	useEffect(() => {
 		dispatch(getAllCategory());
 	}, [dispatch]);
-	const removeCategory = (id: string | number) => {
+	const removeCategory = (id: any) => {
 		dispatch(deleteCategory(id)).then((res: any) => {
 			if (res.payload?.data) {
 				toast.success(res.payload.messenger);
 			}
 		});
 	};
+
+	const itemsPerPage = 6;
+	const totalPages = Math.ceil(categories.length / itemsPerPage);
+	const startIndex = (currentPage - 1) * itemsPerPage;
+	const endIndex = startIndex + itemsPerPage;
+
+	const handlePageChange = (event: any) => {
+		const selected = event.selected;
+		setCurrentPage(selected + 1);
+	};
+
 	return (
 		<div className="container w-2/3 mx-auto">
 			<h2 className="my-3 text-2xl font-medium text-center ">ManagerCategory</h2>
@@ -38,7 +52,7 @@ const ManagerCategory = () => {
 					</thead>
 					<tbody>
 						{isLoading === false &&
-							categories?.map((category: ICategory) => {
+							categories?.slice(startIndex, endIndex).map((category: ICategory) => {
 								return (
 									<tr className="border-b bg-gray-50 " key={category._id}>
 										<th
@@ -67,6 +81,22 @@ const ManagerCategory = () => {
 						{isLoading === true && <Loading />}
 					</tbody>
 				</table>
+				<ReactPaginate
+					breakLabel="..."
+					nextLabel=">"
+					pageCount={totalPages}
+					onPageChange={handlePageChange}
+					containerClassName={'flex justify-center items-center mx-auto container my-4'}
+					activeClassName={'text-white bg-green-500'}
+					pageRangeDisplayed={2}
+					marginPagesDisplayed={1}
+					previousLabel="<"
+					pageClassName="mx-2 p-3 rounded-md"
+					pageLinkClassName="p-3 text-lg"
+					disabledClassName={'bg-gray-200'}
+					previousClassName="bg-gray-400 text-white p-3 rounded-md"
+					nextClassName="bg-gray-400 text-white p-3 rounded-md"
+				/>
 			</div>
 		</div>
 	);

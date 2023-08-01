@@ -17,7 +17,7 @@ export const clientRoutes = [
 		element: Register,
 	},
 	{
-		path: '/detail',
+		path: 'products/detail/:id',
 		element: Detail,
 	},
 ];

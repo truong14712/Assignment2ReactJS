@@ -5,12 +5,12 @@ const NavBar = () => {
 			<div>
 				<ul className="flex">
 					<li>
-						<Link className="p-3 m-2 font-bold " to="#">
+						<Link className="p-3 m-2 font-bold " to="/">
 							Home
 						</Link>
 					</li>
 					<li>
-						<Link className="p-3 m-2 font-bold " to="#">
+						<Link className="p-3 m-2 font-bold " to="/products">
 							Products
 						</Link>
 					</li>

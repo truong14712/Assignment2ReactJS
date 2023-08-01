@@ -1,12 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProduct, deleteProduct, getAllProduct, updateProduct } from '../createAsyncThunk/product';
+import { addProduct, deleteProduct, getAllProduct, updateProduct, getOneProduct } from '../createAsyncThunk/product';
 import { IProduct } from '~/interface/product';
 const initialState = {
 	isLoading: false,
 	products: [],
+	product: null,
 } as {
 	isLoading: boolean;
 	products: IProduct[];
+	product: IProduct;
 };
 
 export const productSlice = createSlice({
@@ -16,6 +18,9 @@ export const productSlice = createSlice({
 	extraReducers: (builder) => {
 		builder.addCase(getAllProduct.fulfilled, (state, action) => {
 			state.products = action.payload;
+		});
+		builder.addCase(getOneProduct.fulfilled, (state, action) => {
+			state.product = action.payload;
 		});
 		builder.addCase(addProduct.fulfilled, (state, action) => {
 			state.products.push(action.payload);

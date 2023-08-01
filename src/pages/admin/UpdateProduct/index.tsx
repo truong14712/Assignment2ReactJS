@@ -10,6 +10,7 @@ import { updateProduct } from '~/redux/createAsyncThunk/product';
 import { ICategory } from '~/interface/category';
 import { productSchema } from '~/schemas/productSchema';
 import { IProduct } from '~/interface/product';
+import { getAllCategory } from '~/redux/createAsyncThunk/category';
 
 const UpdateProduct = () => {
 	const dispatch = useAppDispatch();
@@ -19,13 +20,16 @@ const UpdateProduct = () => {
 	const { categories } = useAppSelector(categorySelector);
 	const [product, setProduct] = useState<any>({});
 	useEffect(() => {
+		dispatch(getAllCategory());
+	}, [dispatch]);
+	useEffect(() => {
 		const currentProduct = products.find((value: IProduct) => value._id === id);
 		reset({
 			...currentProduct,
 			categoryId: currentProduct?.categoryId?._id,
 		});
 		setProduct(currentProduct);
-	}, [products]);
+	}, [products, id]);
 	const {
 		register,
 		handleSubmit,

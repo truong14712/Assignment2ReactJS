@@ -19,9 +19,9 @@ const Header = () => {
 				<div className="w-[310px]">
 					<Link to="#" className="">
 						<img
-							src="https://images.pexels.com/photos/3654869/pexels-photo-3654869.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500"
+							src="https://i.pinimg.com/474x/7b/58/e6/7b58e64207dc272c7bf80d8dfc8090b3.jpg"
 							alt=""
-							className="h-[50px] w-[60px] rounded-md"
+							className="h-[50px] w-[60px] rounded-sm"
 						/>
 					</Link>
 				</div>
