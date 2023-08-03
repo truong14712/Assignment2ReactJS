@@ -7,6 +7,7 @@ import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { productSelector } from '~/redux/selector';
 import LinesEllipsis from 'react-lines-ellipsis';
 import ReactPaginate from 'react-paginate';
+import SimpleSlider from '../Components/Slider';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ const Home = () => {
 	};
 	return (
 		<div>
+			<SimpleSlider />
 			{isLoading === false && (
 				<section className="min-h-screen text-gray-600 body-font ">
 					<div className="container px-5 py-10 mx-auto">
@@ -34,7 +36,7 @@ const Home = () => {
 							{products &&
 								products.slice(startIndex, endIndex).map((product: IProduct) => {
 									return (
-										<div className="w-full p-4 md:w-1/2 lg:w-1/4 hover:bg-slate-100">
+										<div className="w-full p-4 md:w-1/2 lg:w-1/4 hover:bg-slate-100" key={product._id}>
 											<Link
 												to={`/products/detail/${product._id}`}
 												className="relative block h-48 overflow-hidden rounded"

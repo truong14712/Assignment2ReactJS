@@ -1,12 +1,9 @@
+import Cart from '~/pages/client/Cart';
 import WithAuth from './WithAuth';
 
 export const privateRoutes = [
 	{
-		path: '/',
-		element: '',
-	},
-	{
 		path: '/cart',
-		element: '',
+		element: () => <WithAuth children={<Cart />} />,
 	},
 ];

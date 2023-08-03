@@ -4,11 +4,11 @@ import { IProduct } from '~/interface/product';
 const initialState = {
 	isLoading: false,
 	products: [],
-	product: null,
+	product: {},
 } as {
 	isLoading: boolean;
 	products: IProduct[];
-	product: IProduct;
+	product: any;
 };
 
 export const productSlice = createSlice({

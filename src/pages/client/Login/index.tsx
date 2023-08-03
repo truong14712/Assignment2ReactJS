@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { authSelector } from '~/redux/selector';
+import instance from '~/api/instance';
 
 const Login = () => {
 	const dispatch = useAppDispatch();
@@ -24,6 +25,8 @@ const Login = () => {
 	const onSubmit = (data: any) => {
 		dispatch(ActionLogin(data)).then((res) => {
 			if (res.payload) {
+				localStorage.setItem('accessToken', res.payload.accessToken);
+				instance.defaults.headers.common['Authorization'] = `Bearer ${res.payload.accessToken}`;
 				toast.success(res.payload.message);
 				navigate('/');
 			}

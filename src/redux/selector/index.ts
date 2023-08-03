@@ -9,3 +9,6 @@ export const categorySelector = (state: RootState) => {
 export const authSelector = (state: RootState) => {
 	return state.auth;
 };
+export const cartSelector = (state: RootState) => {
+	return state.cart;
+};

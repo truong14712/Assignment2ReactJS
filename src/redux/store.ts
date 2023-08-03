@@ -5,16 +5,18 @@ import { category, auth, product } from '~/api';
 import categoryReducer from './slice/categorySlide';
 import authReducer from './slice/authSlide';
 import productReducer from './slice/productSlide';
+import cartReducer from './slice/cartSlide';
 
 const persistConfig = {
 	key: 'root',
 	storage,
-	whitelist: ['product', 'category', 'auth'],
+	whitelist: ['product', 'category', 'auth', 'cart'],
 };
 const rootReducer = combineReducers({
 	category: categoryReducer,
 	auth: authReducer,
 	product: productReducer,
+	cart: cartReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({

@@ -5,7 +5,7 @@ import { IProduct } from '~/interface/product';
 import { getOneProduct } from '~/redux/createAsyncThunk/product';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { productSelector } from '~/redux/selector';
-
+import { addToCart } from '~/redux/slice/cartSlide';
 const Detail = () => {
 	const dispatch = useAppDispatch();
 	const { product, isLoading, products } = useAppSelector(productSelector);
@@ -13,7 +13,7 @@ const Detail = () => {
 	const { id } = useParams();
 	useEffect(() => {
 		dispatch(getOneProduct(id));
-	}, [dispatch, id]);
+	}, [id]);
 	useEffect(() => {
 		const sameProduct = products.filter((item: IProduct) => {
 			return item.categoryId._id === product?.categoryId;
@@ -42,7 +42,17 @@ const Detail = () => {
 									<button className="px-8 py-2 text-sm font-medium text-white bg-indigo-600 rounded hover:bg-indigo-500 focus:outline-none focus:bg-indigo-500">
 										Order Now
 									</button>
-									<button className="p-2 mx-2 text-gray-600 border rounded-md hover:bg-gray-200 focus:outline-none">
+									<button
+										className="p-2 mx-2 text-gray-600 border rounded-md hover:bg-gray-200 focus:outline-none"
+										onClick={() =>
+											dispatch(
+												addToCart({
+													...product,
+													quantity: 1,
+												}),
+											)
+										}
+									>
 										<svg
 											className="w-5 h-5"
 											fill="none"
@@ -64,7 +74,7 @@ const Detail = () => {
 								{same &&
 									same.map((item) => {
 										return (
-											<div className="w-full p-4">
+											<div className="w-full p-4" key={item._id}>
 												<div className="h-48 overflow-hidden rounded ">
 													<img
 														alt={item.name}

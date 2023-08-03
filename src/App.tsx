@@ -6,6 +6,7 @@ import AdminLayout from './layouts/defaultLayout/admin';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Admin, Client, Private } from './routes';
+import Dashboard from './pages/admin/Dashboard';
 function App() {
 	return (
 		<>
@@ -21,7 +22,8 @@ function App() {
 						return <Route key={index} path={route.path} element={<Page />} />;
 					})}
 				</Route>
-				<Route element={<AdminLayout />}>
+				<Route path="/admin" element={<AdminLayout />}>
+					<Route index path="/admin" element={<Dashboard />} />
 					{Admin.adminRoutes.map((route, index) => {
 						const Page = route.element;
 						return <Route key={index} path={route.path} element={<Page />} />;

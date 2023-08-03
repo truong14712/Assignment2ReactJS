@@ -2,13 +2,14 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import NavBar from '~/layouts/components/client/Navbar';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
-import { authSelector } from '~/redux/selector';
+import { authSelector, cartSelector } from '~/redux/selector';
 import { logout } from '~/redux/slice/authSlide';
 const Header = () => {
 	const [off, setOff] = useState(false);
 	const dispatch = useAppDispatch();
 	const navigate = useNavigate();
 	const { isAuthenticated, auth } = useAppSelector(authSelector);
+	const { carts } = useAppSelector(cartSelector);
 	const Logout = () => {
 		dispatch(logout());
 		navigate('/login');
@@ -68,12 +69,14 @@ const Header = () => {
 					</div>
 				)}
 				{/* WithList and Cart */}
-				<div className="relative ml-3 text-2xl cursor-pointer">
-					<i className="fa-solid fa-cart-shopping" />
-					<span className="absolute w-4 h-4 text-xs text-center text-white bg-red-500 rounded-full -top-1 -right-2">
-						0
-					</span>
-				</div>
+				<Link to={'cart'}>
+					<div className="relative ml-3 text-2xl cursor-pointer">
+						<i className="fa-solid fa-cart-shopping" />
+						<span className="absolute w-4 h-4 text-xs text-center text-white bg-red-500 rounded-full -top-1 -right-2">
+							{carts ? carts?.length : '0'}
+						</span>
+					</div>
+				</Link>
 			</div>
 		</header>
 	);
