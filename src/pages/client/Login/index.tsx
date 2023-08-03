@@ -25,10 +25,15 @@ const Login = () => {
 	const onSubmit = (data: any) => {
 		dispatch(ActionLogin(data)).then((res) => {
 			if (res.payload) {
-				localStorage.setItem('accessToken', res.payload.accessToken);
 				instance.defaults.headers.common['Authorization'] = `Bearer ${res.payload.accessToken}`;
 				toast.success(res.payload.message);
-				navigate('/');
+				if (res.payload.isAdmin) {
+					navigate('/admin');
+				} else if (res.payload === 'Email không tồn tại' || res.payload === 'Mật khẩu không chính xác') {
+					navigate('/login');
+				} else {
+					navigate('/');
+				}
 			}
 		});
 	};

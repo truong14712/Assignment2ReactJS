@@ -38,6 +38,9 @@ const ManagerCategory = () => {
 	return (
 		<div className="container w-2/3 mx-auto">
 			<h2 className="my-3 text-2xl font-medium text-center ">ManagerCategory</h2>
+			<Link to={'/admin/categories/create'}>
+				<button className="p-2 my-3 text-lg text-green-500 rounded-lg bg-slate-200">Add Category</button>
+			</Link>
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left text-gray-500">
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -72,7 +75,7 @@ const ManagerCategory = () => {
 												className="mx-2 font-medium text-blue-600 hover:underline"
 												onClick={() => removeCategory(category._id)}
 											>
-												Xoa
+												Remove
 											</button>
 										</td>
 									</tr>

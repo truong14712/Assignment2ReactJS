@@ -1,5 +1,11 @@
+import SideBar from '../SideBar';
+
 const Header = () => {
-	return <div>Header</div>;
+	return (
+		<>
+			<SideBar />
+		</>
+	);
 };
 
 export default Header;

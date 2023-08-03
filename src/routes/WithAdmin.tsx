@@ -7,7 +7,6 @@ type WithAdminProps = {
 };
 const WithAdmin = ({ children }: WithAdminProps) => {
 	const { isLoading, isAuthenticated, auth } = useSelector(authSelector);
-	console.log(isLoading);
 	if (isLoading === false) {
 		if (!isAuthenticated) {
 			return <Navigate to="/login" replace />;

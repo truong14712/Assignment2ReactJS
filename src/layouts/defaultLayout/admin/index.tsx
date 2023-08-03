@@ -1,11 +1,9 @@
-import { Outlet } from 'react-router';
 import Footer from '~/layouts/components/admin/Footer';
 import Header from '~/layouts/components/admin/Header';
 const AdminLayout = () => {
 	return (
-		<div>
+		<div className="">
 			<Header />
-			<Outlet />
 			<Footer />
 		</div>
 	);
