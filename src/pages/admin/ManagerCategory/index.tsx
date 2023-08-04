@@ -36,7 +36,7 @@ const ManagerCategory = () => {
 	};
 
 	return (
-		<div className="container w-2/3 mx-auto">
+		<div className="">
 			<h2 className="my-3 text-2xl font-medium text-center ">ManagerCategory</h2>
 			<Link to={'/admin/categories/create'}>
 				<button className="p-2 my-3 text-lg text-green-500 rounded-lg bg-slate-200">Add Category</button>

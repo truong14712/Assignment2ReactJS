@@ -1,30 +1,19 @@
-import { useEffect, useState } from 'react';
+import moment from 'moment';
+import { useState } from 'react';
+import ReactPaginate from 'react-paginate';
 import { Link } from 'react-router-dom';
 import Loading from '~/components/Loading';
 import { IProduct } from '~/interface/product';
-import { getAllProduct, deleteProduct } from '~/redux/createAsyncThunk/product';
-import { useAppDispatch, useAppSelector } from '~/redux/hooks';
-import { productSelector } from '~/redux/selector';
-import { toast } from 'react-toastify';
-import ReactPaginate from 'react-paginate';
+import { useGetOrderAllQuery } from '~/redux/rtk-Query/order';
+import { order_status } from '~/utils/orderStatus';
+import { payment_method } from '~/utils/payment_method';
 
-const ManagerProduct = () => {
-	const dispatch = useAppDispatch();
-	const { products, isLoading } = useAppSelector(productSelector);
-	const [currentPage, setCurrentPage] = useState(1);
-	useEffect(() => {
-		dispatch(getAllProduct());
-	}, [dispatch]);
-	const removeProduct = (id: any) => {
-		dispatch(deleteProduct(id)).then((res: any) => {
-			if (res.payload?.data) {
-				toast.success(res.payload.messenger);
-			}
-		});
-	};
-
+const ManagerOrder = () => {
+	const { data, isLoading } = useGetOrderAllQuery();
 	const itemsPerPage = 6;
-	const totalPages = Math.ceil(products.length / itemsPerPage);
+	const [currentPage, setCurrentPage] = useState(1);
+
+	const totalPages = Math.ceil(data?.length / itemsPerPage);
 	const startIndex = (currentPage - 1) * itemsPerPage;
 	const endIndex = startIndex + itemsPerPage;
 
@@ -32,62 +21,92 @@ const ManagerProduct = () => {
 		const selected = event.selected;
 		setCurrentPage(selected + 1);
 	};
-
 	return (
-		<div className="">
-			<h2 className="my-3 text-2xl font-medium text-center ">ManagerProduct</h2>
-			<Link to={'/admin/products/create'}>
-				<button className="p-2 my-3 text-lg text-green-500 rounded-lg bg-slate-200">Add Product</button>
-			</Link>
+		<>
+			<h2 className="my-3 text-2xl font-medium text-center ">ManagerOrder</h2>
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left text-gray-500">
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
 						<tr>
 							<th scope="col" className="px-6 py-3">
-								Product Name
+								Mã đơn hàng
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Price
+								Thông tin giao hàng
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Image
+								Ngày mua
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Category
+								Số lượng
 							</th>
 							<th scope="col" className="px-6 py-3">
-								Action
+								Hình thức thanh toán
+							</th>
+							<th scope="col" className="px-6 py-3">
+								Trạng thái
+							</th>
+							<th scope="col" className="px-6 py-3">
+								Tổng tiền
+							</th>
+							<th scope="col" className="px-6 py-3">
+								Hành động
 							</th>
 						</tr>
 					</thead>
 					<tbody>
 						{isLoading === false &&
-							products?.slice(startIndex, endIndex).map((product: IProduct) => {
+							data?.slice(startIndex, endIndex).map((product: any) => {
 								return (
-									<tr className="border-b bg-gray-50 " key={product._id}>
+									<tr className="border-b bg-gray-50 " key={product.orderId}>
 										<th
 											scope="row"
 											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 										>
-											{product.name}
+											{product.orderId}
+										</th>
+										<th
+											scope="row"
+											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white w-[215px]"
+										>
+											<b>Người nhận</b> : {product.name} <br />
+											<b>Địa chỉ</b> : {product.address} <br />
+											<b>Số điện thoạt</b> : {product.phoneNumber} <br />
 										</th>
 										<th
 											scope="row"
 											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 										>
-											{product.price}
+											{moment.utc(product.createdAt).utcOffset(7).format('YYYY-MM-DD HH:mm:ss')}
 										</th>
 										<th
 											scope="row"
 											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 										>
-											<img src={`${product.image}`} alt="" className="w-[140px]" />
+											{product.products.length}
 										</th>
 										<th
 											scope="row"
 											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
 										>
-											{product.categoryId?.name}
+											{payment_method[product.payment]}
+										</th>
+										<th
+											scope="row"
+											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{order_status[+product.status]}
+										</th>
+										<th
+											scope="row"
+											className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+										>
+											{product.products &&
+												product.products?.reduce(
+													(sum: number, item: IProduct) => sum + item.quantity * item.price,
+													0,
+												)}
+											$
 										</th>
 										<td className="px-6 py-4">
 											<Link
@@ -96,12 +115,6 @@ const ManagerProduct = () => {
 											>
 												Edit
 											</Link>
-											<button
-												className="mx-2 font-medium text-blue-600 hover:underline"
-												onClick={() => removeProduct(product._id)}
-											>
-												Remove
-											</button>
 										</td>
 									</tr>
 								);
@@ -127,8 +140,8 @@ const ManagerProduct = () => {
 					nextClassName="bg-gray-400 text-white p-3 rounded-md"
 				/>
 			</div>
-		</div>
+		</>
 	);
 };
 
-export default ManagerProduct;
+export default ManagerOrder;

@@ -29,31 +29,33 @@ const Header = () => {
 				<NavBar />
 				{isAuthenticated && (
 					<div className="flex items-center ml-auto w-max">
-						<button className="relative px-3 avatar" onClick={() => setOff(!off)}>
+						<button className="relative px-3" onClick={() => setOff(!off)}>
 							Hello: {auth?.name}
 							{off && (
-								<div className="border absolute top-14 right-0 user_menu z-10 bg-gray-50 w-[200px] p-3">
+								<div className="border absolute top-8 right-0  bg-gray-50 w-[200px] p-3 z-10">
 									<ul className="">
-										<li className="px-1 py-2">
-											<Link className={''} to="#">
-												Checkout
-											</Link>
-										</li>
+										{carts.length > 0 && (
+											<li className="px-1 py-2">
+												<Link className={''} to="/order">
+													<i className="mx-2 fa-solid fa-money-check"></i>
+													Checkout
+												</Link>
+											</li>
+										)}
+										<Link className="px-1 py-2" to={`/order/history/${auth._id}`}>
+											<i className="fa-solid fa-clock-rotate-left"></i>
+											<span className="mx-2">History</span>
+										</Link>
 										<li className="px-1 py-2">
 											<button className={''} onClick={() => Logout()}>
-												Logout
+												<i className="fa-solid fa-arrow-right-from-bracket"></i>
+												<span className="mx-2">Logout</span>
 											</button>
 										</li>
 									</ul>
 								</div>
 							)}
 						</button>
-						{/* <div className="relative m-3 text-2xl cursor-pointer ">
-							<i className="fa-regular fa-heart" />
-							<span className="absolute w-4 h-4 text-xs text-center text-white bg-red-500 rounded-full -top-1 -right-2">
-								0
-							</span>
-						</div> */}
 					</div>
 				)}
 				{!isAuthenticated && (

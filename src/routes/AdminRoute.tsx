@@ -6,6 +6,7 @@ import UpdateCategory from '~/pages/admin/UpdateCategory';
 import ManagerProduct from '~/pages/admin/ManagerProduct';
 import CreateProduct from '~/pages/admin/CreateProduct';
 import UpdateProduct from '~/pages/admin/UpdateProduct';
+import ManagerOrder from '~/pages/admin/ManagerOrder';
 export const adminRoutes = [
 	{
 		path: '/admin/dashboard',
@@ -34,5 +35,9 @@ export const adminRoutes = [
 	{
 		path: '/admin/products/update/:id',
 		element: () => <WithAdmin children={<UpdateProduct />} />,
+	},
+	{
+		path: '/admin/orders',
+		element: () => <WithAdmin children={<ManagerOrder />} />,
 	},
 ];

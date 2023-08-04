@@ -63,6 +63,15 @@ const SideBar = () => {
 								<span className="flex-1 ml-3 whitespace-nowrap">Categories</span>
 							</Link>
 						</li>
+						<li>
+							<Link
+								to={'/admin/orders'}
+								className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 group"
+							>
+								<i className="fa-brands fa-first-order"></i>
+								<span className="flex-1 ml-3 whitespace-nowrap">Order</span>
+							</Link>
+						</li>
 						<li onClick={() => Logout()}>
 							<a href="#" className="flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
 								<svg

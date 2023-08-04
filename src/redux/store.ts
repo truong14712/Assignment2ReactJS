@@ -6,7 +6,8 @@ import categoryReducer from './slice/categorySlide';
 import authReducer from './slice/authSlide';
 import productReducer from './slice/productSlide';
 import cartReducer from './slice/cartSlide';
-
+import { orderReducer } from './rtk-Query/order';
+import orderAPI from './rtk-Query/order';
 const persistConfig = {
 	key: 'root',
 	storage,
@@ -17,6 +18,7 @@ const rootReducer = combineReducers({
 	auth: authReducer,
 	product: productReducer,
 	cart: cartReducer,
+	[orderAPI.reducerPath]: orderReducer,
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
@@ -29,7 +31,7 @@ export const store = configureStore({
 			thunk: {
 				extraArgument: { category, auth, product },
 			},
-		}),
+		}).concat(orderAPI.middleware),
 });
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;

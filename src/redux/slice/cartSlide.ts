@@ -46,10 +46,13 @@ export const cartSlice = createSlice({
 				toast.success('Xóa sản phẩm thành công');
 			}
 		},
+		resetCart: (state) => {
+			state.carts = [];
+		},
 	},
 	extraReducers: (builder) => {},
 });
 
-export const { increase, decrease, addToCart, deleteCart } = cartSlice.actions;
+export const { increase, decrease, addToCart, deleteCart, resetCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

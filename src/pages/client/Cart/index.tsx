@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { cartSelector } from '~/redux/selector';
 import { decrease, deleteCart, increase } from '~/redux/slice/cartSlide';
@@ -71,23 +72,14 @@ const Cart = () => {
 			{carts.length === 0 && (
 				<div className="flex items-center justify-center text-lg">Bạn chưa có sản phẩm nào trong giỏ hàng</div>
 			)}
-			{carts && (
+			{carts.length > 0 ? (
 				<div>
-					<div className="container flex items-center justify-between p-2 mx-auto space-x-6">
-						<p className="text-lg font-bold">Total</p>
-						<div>
-							<p className="mb-1 text-lg font-bold">
-								{carts.reduce(function (sum, item) {
-									return sum + item.price * item.quantity;
-								}, 0)}
-								$
-							</p>
-						</div>
-					</div>
 					<button className="mt-6 w-full rounded-md bg-blue-500 py-1.5 font-medium text-blue-50 hover:bg-blue-600">
-						Check out
+						<Link to={'/order'}>Check out</Link>
 					</button>
 				</div>
+			) : (
+				''
 			)}
 		</>
 	);
