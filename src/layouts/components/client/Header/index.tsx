@@ -42,10 +42,20 @@ const Header = () => {
 												</Link>
 											</li>
 										)}
-										<Link className="px-1 py-2" to={`/order/history/${auth._id}`}>
-											<i className="fa-solid fa-clock-rotate-left"></i>
-											<span className="mx-2">History</span>
-										</Link>
+										<li className="px-1 py-2">
+											<Link className="px-1 py-2" to={`/order/history/${auth._id}`}>
+												<i className="fa-solid fa-clock-rotate-left"></i>
+												<span className="mx-2">History</span>
+											</Link>
+										</li>
+										{auth.isAdmin === true && (
+											<li className="px-1 py-2">
+												<Link className={''} to="/admin/dashboard">
+													<i className="fa-solid fa-exclamation"></i>
+													<span className="mx-2">Admin</span>
+												</Link>
+											</li>
+										)}
 										<li className="px-1 py-2">
 											<button className={''} onClick={() => Logout()}>
 												<i className="fa-solid fa-arrow-right-from-bracket"></i>

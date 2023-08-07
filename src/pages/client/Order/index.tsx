@@ -6,10 +6,10 @@ import { useAppDispatch, useAppSelector } from '~/redux/hooks';
 import { useAddOrderMutation } from '~/redux/rtk-Query/order';
 import { authSelector, cartSelector } from '~/redux/selector';
 import { orderSchema } from '~/schemas/orderSchema';
-import { v4 as uuidv4 } from 'uuid';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { resetCart } from '~/redux/slice/cartSlide';
+import { nanoid } from '@reduxjs/toolkit';
 const Order = () => {
 	const { carts } = useAppSelector(cartSelector);
 	const { auth } = useAppSelector(authSelector);
@@ -33,7 +33,7 @@ const Order = () => {
 			address: data.address,
 			phoneNumber: data.phoneNumber,
 			userId: auth._id as string,
-			orderId: uuidv4(),
+			orderId: nanoid(),
 		})
 			.unwrap()
 			.then((res) => {

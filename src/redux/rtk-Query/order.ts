@@ -16,6 +16,10 @@ const orderAPI = createApi({
 			}),
 			invalidatesTags: ['Order'],
 		}),
+		getOne: builder.query({
+			query: (id: string) => `/${id}`,
+			providesTags: ['Order'],
+		}),
 		getOneOrder: builder.query({
 			query: (userId: string) => `/find/${userId}`,
 			providesTags: ['Order'],
@@ -24,8 +28,18 @@ const orderAPI = createApi({
 			query: () => `/`,
 			providesTags: ['Order'],
 		}),
+		updateStatus: builder.mutation({
+			query: ({ id, status }) => ({
+				url: `/updateStatus/${id}`,
+				method: 'PATCH',
+				body: {
+					status,
+				},
+			}),
+			invalidatesTags: ['Order'],
+		}),
 	}),
 });
-export const { useAddOrderMutation, useGetOneOrderQuery, useGetOrderAllQuery } = orderAPI;
+export const { useAddOrderMutation, useGetOneOrderQuery, useGetOrderAllQuery, useUpdateStatusMutation,useGetOneQuery } = orderAPI;
 export const orderReducer = orderAPI.reducer;
 export default orderAPI;

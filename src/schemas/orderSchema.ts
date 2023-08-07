@@ -17,3 +17,6 @@ export const orderSchema = yup.object({
 		.trim('Vui lòng không nhập khoảng trắng')
 		.required('Vui lòng nhập tên địa chỉ của bạn'),
 });
+export const updateStatus = yup.object({
+	status: yup.string().default('').trim('Vui lòng không nhập khoảng trắng').required('Vui lòng nhập tên của bạn'),
+});

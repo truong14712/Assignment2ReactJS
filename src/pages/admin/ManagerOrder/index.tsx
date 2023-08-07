@@ -23,7 +23,7 @@ const ManagerOrder = () => {
 	};
 	return (
 		<>
-			<h2 className="my-3 text-2xl font-medium text-center ">ManagerOrder</h2>
+			<h2 className="my-3 text-2xl font-medium text-center ">Manager Order</h2>
 			<div className="relative overflow-x-auto shadow-md sm:rounded-lg">
 				<table className="w-full text-sm text-left text-gray-500">
 					<thead className="text-xs text-gray-700 uppercase bg-gray-50 ">
@@ -108,13 +108,16 @@ const ManagerOrder = () => {
 												)}
 											$
 										</th>
+
 										<td className="px-6 py-4">
-											<Link
-												to={`update/${product._id}`}
-												className="mx-2 font-medium text-blue-600 hover:underline"
-											>
-												Edit
-											</Link>
+											{order_status[+product.status] !== 'Hoàn thành' && (
+												<Link
+													to={`update/${product._id}`}
+													className="mx-2 font-medium text-blue-600 hover:underline"
+												>
+													Edit
+												</Link>
+											)}
 										</td>
 									</tr>
 								);

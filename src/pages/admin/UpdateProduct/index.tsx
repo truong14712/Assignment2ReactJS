@@ -47,7 +47,7 @@ const UpdateProduct = () => {
 		});
 	};
 	return (
-		<div className="container w-2/3 mx-auto">
+		<div className="">
 			<h2 className="my-3 text-2xl font-medium text-center">UpdateProduct</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<InputField name="name" label="Name" register={register} errors={errors.name} />
