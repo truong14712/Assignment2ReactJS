@@ -1,14 +1,23 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { addProduct, deleteProduct, getAllProduct, updateProduct, getOneProduct } from '../createAsyncThunk/product';
+import {
+	addProduct,
+	deleteProduct,
+	getAllProduct,
+	updateProduct,
+	getOneProduct,
+	keywordProduct,
+} from '../createAsyncThunk/product';
 import { IProduct } from '~/interface/product';
 const initialState = {
 	isLoading: false,
 	products: [],
 	product: {},
+	keyword: [],
 } as {
 	isLoading: boolean;
 	products: IProduct[];
 	product: any;
+	keyword: [];
 };
 
 export const productSlice = createSlice({
@@ -31,9 +40,12 @@ export const productSlice = createSlice({
 			state.products = state.products.map((item: IProduct) => (item._id == newCategory._id ? newCategory : item));
 		});
 		// Deleting
+		builder.addCase(deleteProduct.fulfilled, (state, action: any) => {
+			state.products = state.products.filter((item: IProduct) => item._id !== action.payload?.data?._id);
+		});
 		builder
-			.addCase(deleteProduct.fulfilled, (state, action: any) => {
-				state.products = state.products.filter((item: IProduct) => item._id !== action.payload?.data?._id);
+			.addCase(keywordProduct.fulfilled, (state, action) => {
+				state.keyword = action.payload;
 			})
 			.addMatcher(
 				(action) => action.type.endsWith('/pending'),

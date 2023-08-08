@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { resetCart } from '~/redux/slice/cartSlide';
 import { nanoid } from '@reduxjs/toolkit';
+import { useEffect } from 'react';
 const Order = () => {
 	const { carts } = useAppSelector(cartSelector);
 	const { auth } = useAppSelector(authSelector);
@@ -24,6 +25,11 @@ const Order = () => {
 	} = useForm<any>({
 		resolver: yupResolver(orderSchema),
 	});
+	useEffect(() => {
+		if (carts.length === 0) {
+			navigate('/');
+		}
+	}, [carts, navigate]);
 	const onSubmit = (data: any) => {
 		addOrder({
 			products: [...carts],

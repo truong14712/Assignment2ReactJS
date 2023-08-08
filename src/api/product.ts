@@ -16,5 +16,7 @@ const updateProducts = (data: product.IProduct) => {
 const removeProducts = (id: string) => {
 	return instance.delete('/products/' + id);
 };
-
-export { getAllProducts, getOneProducts, addProducts, updateProducts, removeProducts };
+const searchKeyword = (keyword: string) => {
+	return instance.get('/products/search/' + keyword);
+};
+export { getAllProducts, getOneProducts, addProducts, updateProducts, removeProducts, searchKeyword };

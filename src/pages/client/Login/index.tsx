@@ -47,7 +47,7 @@ const Login = () => {
 			<h2 className="my-3 text-2xl font-medium text-center">Login</h2>
 			<form onSubmit={handleSubmit(onSubmit)}>
 				<InputField name="email" label="Email" register={register} errors={errors.email} />
-				<InputField name="password" label="Password" register={register} errors={errors.password} />
+				<InputField name="password" label="Password" register={register} errors={errors.password} type='password'/>
 				<div className="flex justify-center y-center items-">
 					<button className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 ">
 						Đăng nhập

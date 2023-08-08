@@ -8,6 +8,7 @@ import { productSelector } from '~/redux/selector';
 import LinesEllipsis from 'react-lines-ellipsis';
 import ReactPaginate from 'react-paginate';
 import SimpleSlider from '../Components/Slider';
+import Search from '../Components/Search';
 
 const Home = () => {
 	const dispatch = useAppDispatch();
@@ -29,8 +30,10 @@ const Home = () => {
 	return (
 		<div>
 			<SimpleSlider />
+			<Search />
 			{isLoading === false && (
 				<section className="min-h-screen text-gray-600 body-font ">
+					<h2 className="my-2 text-2xl font-medium text-center">HOME</h2>
 					<div className="container px-5 py-10 mx-auto">
 						<div className="flex flex-wrap -m-4">
 							{products &&

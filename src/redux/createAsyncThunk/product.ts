@@ -32,6 +32,10 @@ export const updateProduct = createAsyncThunk<any, any, any>(
 export const deleteProduct = createAsyncThunk<any>('product/deleteProduct', async (id, thunkApi) => {
 	const { extra } = thunkApi;
 	const data = await extra.product.removeProducts(id);
-	console.log(data);
+	return data;
+});
+export const keywordProduct = createAsyncThunk<any>('product/keywordProduct', async (name, thunkApi) => {
+	const { extra } = thunkApi;
+	const data = await extra.product.searchKeyword(name);
 	return data;
 });

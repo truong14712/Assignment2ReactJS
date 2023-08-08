@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
 	cart: cartReducer,
 	[orderAPI.reducerPath]: orderReducer,
 });
+const middleware = [orderAPI.middleware];
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
 	reducer: persistedReducer,
@@ -31,7 +32,7 @@ export const store = configureStore({
 			thunk: {
 				extraArgument: { category, auth, product },
 			},
-		}).concat(orderAPI.middleware),
+		}).concat(...middleware),
 });
 export type AppDispatch = typeof store.dispatch;
 export type RootState = ReturnType<typeof store.getState>;
